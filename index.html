@@ -1,257 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>MHT CET MBA Score Calculator</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family: Inter, system-ui, sans-serif;
-    }
+<title>MHT CET MBA Score Analyzer</title>
 
-    body{
-      background:#0f172a;
-      color:white;
-      min-height:100vh;
-      overflow-x:hidden;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    .bg{
-      position:fixed;
-      inset:0;
-      background:
-      radial-gradient(circle at top left,#1e3a8a 0%,transparent 30%),
-      radial-gradient(circle at bottom right,#7c3aed 0%,transparent 30%),
-      #0f172a;
-      z-index:-1;
-    }
+<style>
 
-    .container{
-      width:min(1200px,95%);
-      margin:auto;
-      padding:40px 0;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .hero{
-      text-align:center;
-      margin-bottom:40px;
-    }
+body{
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+    color:white;
+    background:
+    radial-gradient(circle at top left,#1d4ed8 0%,transparent 25%),
+    radial-gradient(circle at bottom right,#7c3aed 0%,transparent 30%),
+    #020617;
+}
+
+/* BACKGROUND EFFECTS */
+
+.bg-grid{
+    position:fixed;
+    inset:0;
+    background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size:50px 50px;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+    z-index:-2;
+}
+
+.glow{
+    position:fixed;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    filter:blur(120px);
+    opacity:0.25;
+    z-index:-1;
+}
+
+.glow1{
+    background:#2563eb;
+    top:-100px;
+    left:-100px;
+}
+
+.glow2{
+    background:#7c3aed;
+    bottom:-150px;
+    right:-100px;
+}
+
+/* MAIN */
+
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+    padding:60px 0;
+}
+
+/* HERO */
+
+.hero{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.hero h1{
+    font-size:clamp(3rem,7vw,5.5rem);
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-2px;
+
+    background:linear-gradient(
+        90deg,
+        #60a5fa,
+        #818cf8,
+        #c084fc
+    );
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    margin-top:20px;
+    font-size:1.3rem;
+    color:#cbd5e1;
+}
+
+.line{
+    width:100px;
+    height:4px;
+    border-radius:20px;
+    margin:22px auto 0;
+    background:linear-gradient(90deg,#2563eb,#a855f7);
+}
+
+/* UPLOAD BOX */
+
+.upload-wrapper{
+    max-width:950px;
+    margin:auto;
+}
+
+.upload-box{
+    position:relative;
+    overflow:hidden;
+
+    border:2px dashed rgba(96,165,250,0.6);
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(15,23,42,0.85),
+        rgba(30,41,59,0.55)
+    );
+
+    backdrop-filter:blur(20px);
+
+    border-radius:32px;
+
+    padding:80px 40px;
+
+    text-align:center;
+
+    transition:0.35s ease;
+}
+
+.upload-box:hover{
+    transform:translateY(-6px);
+    border-color:#c084fc;
+    box-shadow:
+    0 0 40px rgba(168,85,247,0.25);
+}
+
+.upload-icon{
+    width:140px;
+    height:140px;
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:2px solid rgba(96,165,250,0.7);
+
+    background:
+    radial-gradient(circle at top,
+    rgba(59,130,246,0.25),
+    rgba(168,85,247,0.08));
+
+    margin-bottom:35px;
+}
+
+.upload-icon svg{
+    width:65px;
+    fill:url(#grad);
+}
+
+.upload-box h2{
+    font-size:3rem;
+    margin-bottom:18px;
+}
+
+.upload-box p{
+    color:#94a3b8;
+    font-size:1.2rem;
+}
+
+/* BUTTON */
+
+.upload-btn{
+    margin-top:40px;
+
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+
+    padding:22px 42px;
+
+    border:none;
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+    font-size:1.3rem;
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:0.3s ease;
+
+    box-shadow:
+    0 10px 30px rgba(37,99,235,0.35);
+}
+
+.upload-btn:hover{
+    transform:scale(1.05);
+    box-shadow:
+    0 14px 40px rgba(124,58,237,0.4);
+}
+
+input{
+    display:none;
+}
+
+/* INFO */
+
+.info{
+    margin:35px auto 0;
+
+    width:max-content;
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    padding:18px 26px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,0.04);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    color:#cbd5e1;
+}
+
+/* FEATURES */
+
+.features{
+    margin-top:60px;
+
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:24px;
+}
+
+.feature-card{
+    padding:30px;
+
+    border-radius:28px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(15,23,42,0.9),
+        rgba(30,41,59,0.45)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(16px);
+
+    transition:0.3s ease;
+}
+
+.feature-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(168,85,247,0.5);
+}
+
+.icon-box{
+    width:78px;
+    height:78px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(37,99,235,0.35),
+        rgba(168,85,247,0.25)
+    );
+
+    margin-bottom:24px;
+}
+
+.icon-box svg{
+    width:38px;
+    height:38px;
+    fill:#8b5cf6;
+}
+
+.feature-card h3{
+    font-size:1.6rem;
+    margin-bottom:12px;
+}
+
+.feature-card p{
+    color:#cbd5e1;
+    line-height:1.7;
+    font-size:1.05rem;
+}
+
+/* RESULTS */
+
+.results{
+    margin-top:70px;
+    display:none;
+}
+
+.results-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+}
+
+.result-card{
+    padding:28px;
+    border-radius:26px;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(15,23,42,0.95),
+        rgba(30,41,59,0.45)
+    );
+
+    border:1px solid rgba(255,255,255,0.08);
+}
+
+.result-card h4{
+    color:#94a3b8;
+    margin-bottom:12px;
+}
+
+.result-card .value{
+    font-size:3rem;
+    font-weight:800;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    margin-top:40px;
+    overflow:auto;
+    border-radius:28px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+
+    background:
+    linear-gradient(
+        145deg,
+        rgba(15,23,42,0.92),
+        rgba(30,41,59,0.55)
+    );
+
+    backdrop-filter:blur(20px);
+}
+
+th{
+    background:rgba(255,255,255,0.05);
+    color:#cbd5e1;
+}
+
+th,td{
+    padding:22px;
+    text-align:left;
+}
+
+tr{
+    border-bottom:1px solid rgba(255,255,255,0.06);
+}
+
+tr:hover{
+    background:rgba(255,255,255,0.03);
+}
+
+.correct{
+    color:#22c55e;
+    font-weight:700;
+}
+
+.wrong{
+    color:#ef4444;
+    font-weight:700;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
 
     .hero h1{
-      font-size:3rem;
-      font-weight:800;
-      background:linear-gradient(90deg,#60a5fa,#c084fc);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-
-    .hero p{
-      color:#cbd5e1;
-      margin-top:10px;
-      font-size:1.1rem;
+        font-size:3rem;
     }
 
     .upload-box{
-      border:2px dashed rgba(255,255,255,0.2);
-      border-radius:24px;
-      padding:60px 30px;
-      text-align:center;
-      background:rgba(255,255,255,0.05);
-      backdrop-filter: blur(12px);
-      transition:0.3s;
-      cursor:pointer;
+        padding:60px 20px;
     }
 
-    .upload-box:hover{
-      border-color:#60a5fa;
-      transform:translateY(-3px);
-    }
-
-    input[type=file]{
-      display:none;
+    .upload-box h2{
+        font-size:2rem;
     }
 
     .upload-btn{
-      display:inline-block;
-      margin-top:20px;
-      padding:14px 28px;
-      border-radius:16px;
-      background:linear-gradient(90deg,#2563eb,#7c3aed);
-      color:white;
-      font-weight:700;
-      cursor:pointer;
-      transition:0.3s;
+        width:100%;
+        justify-content:center;
     }
 
-    .upload-btn:hover{
-      transform:scale(1.05);
+    .info{
+        width:100%;
+        justify-content:center;
+        text-align:center;
+        border-radius:20px;
     }
 
-    .results{
-      margin-top:40px;
-      display:none;
-      animation:fade 0.5s ease;
-    }
+}
 
-    @keyframes fade{
-      from{
-        opacity:0;
-        transform:translateY(10px);
-      }
-      to{
-        opacity:1;
-        transform:translateY(0);
-      }
-    }
-
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:20px;
-      margin-bottom:30px;
-    }
-
-    .card{
-      background:rgba(255,255,255,0.05);
-      border:1px solid rgba(255,255,255,0.1);
-      backdrop-filter:blur(12px);
-      border-radius:24px;
-      padding:25px;
-    }
-
-    .card h3{
-      color:#94a3b8;
-      margin-bottom:10px;
-      font-size:0.95rem;
-    }
-
-    .card .value{
-      font-size:2rem;
-      font-weight:800;
-    }
-
-    table{
-      width:100%;
-      border-collapse:collapse;
-      overflow:hidden;
-      border-radius:20px;
-      background:rgba(255,255,255,0.05);
-      backdrop-filter:blur(12px);
-    }
-
-    th,td{
-      padding:18px;
-      text-align:left;
-    }
-
-    th{
-      background:rgba(255,255,255,0.08);
-      color:#cbd5e1;
-    }
-
-    tr{
-      border-bottom:1px solid rgba(255,255,255,0.08);
-    }
-
-    tr:hover{
-      background:rgba(255,255,255,0.03);
-    }
-
-    .footer{
-      margin-top:50px;
-      text-align:center;
-      color:#64748b;
-      font-size:0.9rem;
-    }
-
-    .success{
-      color:#22c55e;
-    }
-
-    .danger{
-      color:#ef4444;
-    }
-
-  </style>
+</style>
 </head>
 
 <body>
 
-<div class="bg"></div>
+<div class="bg-grid"></div>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
 
 <div class="container">
 
-  <div class="hero">
-    <h1>MHT CET MBA Score Analyzer</h1>
-    <p>Upload your response sheet HTML and get instant section-wise analysis.</p>
-  </div>
+    <section class="hero">
 
-  <label class="upload-box">
+        <h1>MHT CET MBA Score Analyzer</h1>
 
-    <h2>Drop your Response Sheet here</h2>
-    <p style="margin-top:10px;color:#94a3b8;">
-      Supports official objection tracker HTML file
-    </p>
+        <p>
+            Upload your response sheet HTML and get instant section-wise analysis.
+        </p>
 
-    <div class="upload-btn">
-      Choose HTML File
-    </div>
+        <div class="line"></div>
 
-    <input type="file" id="fileInput" accept=".html,.htm">
+    </section>
 
-  </label>
+    <section class="upload-wrapper">
 
-  <div class="results" id="results">
+        <label class="upload-box">
 
-    <div class="cards">
+            <div class="upload-icon">
 
-      <div class="card">
-        <h3>Total Questions</h3>
-        <div class="value" id="totalQuestions">0</div>
-      </div>
+                <svg viewBox="0 0 24 24">
 
-      <div class="card">
-        <h3>Correct Answers</h3>
-        <div class="value success" id="correctAnswers">0</div>
-      </div>
+                    <defs>
+                        <linearGradient id="grad">
+                            <stop offset="0%" stop-color="#60a5fa"/>
+                            <stop offset="100%" stop-color="#c084fc"/>
+                        </linearGradient>
+                    </defs>
 
-      <div class="card">
-        <h3>Wrong Answers</h3>
-        <div class="value danger" id="wrongAnswers">0</div>
-      </div>
+                    <path d="M19.35 10.04A7.49 7.49 0 005.52 8.69 5.994 5.994 0 006 20h13a5 5 0 00.35-9.96zM13 12v4h-2v-4H8l4-4 4 4h-3z"/>
 
-      <div class="card">
-        <h3>Total Marks</h3>
-        <div class="value" id="totalMarks">0</div>
-      </div>
+                </svg>
 
-    </div>
+            </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Section</th>
-          <th>Total</th>
-          <th>Correct</th>
-          <th>Wrong</th>
-          <th>Accuracy</th>
-          <th>Marks</th>
-        </tr>
-      </thead>
+            <h2>Drop your Response Sheet here</h2>
 
-      <tbody id="tableBody"></tbody>
+            <p>
+                Supports official objection tracker HTML file
+            </p>
 
-    </table>
+            <button class="upload-btn" type="button">
 
-  </div>
+                Upload HTML File
 
-  <div class="footer">
-    Built for MHT CET MBA/CET Response Sheet Analysis
-  </div>
+            </button>
+
+            <input type="file" id="fileInput" accept=".html,.htm">
+
+        </label>
+
+        <div class="info">
+            🔒 Your file is processed locally. No data is uploaded.
+        </div>
+
+    </section>
+
+    <!-- RESULTS -->
+
+    <section class="results" id="results">
+
+        <div class="results-grid">
+
+            <div class="result-card">
+                <h4>Total Questions</h4>
+                <div class="value" id="totalQuestions">0</div>
+            </div>
+
+            <div class="result-card">
+                <h4>Correct</h4>
+                <div class="value correct" id="correctAnswers">0</div>
+            </div>
+
+            <div class="result-card">
+                <h4>Wrong</h4>
+                <div class="value wrong" id="wrongAnswers">0</div>
+            </div>
+
+            <div class="result-card">
+                <h4>Total Marks</h4>
+                <div class="value" id="totalMarks">0</div>
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Total</th>
+                        <th>Correct</th>
+                        <th>Wrong</th>
+                        <th>Accuracy</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+
+                <tbody id="tableBody"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURES -->
+
+    <section class="features">
+
+        <div class="feature-card">
+
+            <div class="icon-box">📊</div>
+
+            <h3>Section-wise Analysis</h3>
+
+            <p>
+                Get detailed accuracy and marks breakdown for every section instantly.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon-box">⚡</div>
+
+            <h3>Instant Results</h3>
+
+            <p>
+                Analyze your performance in seconds directly inside your browser.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon-box">🛡️</div>
+
+            <h3>100% Secure</h3>
+
+            <p>
+                Your response sheet never leaves your device. Fully local processing.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <div class="icon-box">🧠</div>
+
+            <h3>Smart Insights</h3>
+
+            <p>
+                Understand your strengths and weak sections using analytics.
+            </p>
+
+        </div>
+
+    </section>
 
 </div>
 
@@ -259,102 +614,115 @@
 
 const fileInput = document.getElementById("fileInput");
 
+document.querySelector(".upload-btn").addEventListener("click", () => {
+    fileInput.click();
+});
+
 fileInput.addEventListener("change", handleFile);
 
 function handleFile(event){
 
-  const file = event.target.files[0];
+    const file = event.target.files[0];
 
-  if(!file){
-    return;
-  }
+    if(!file) return;
 
-  const reader = new FileReader();
+    const reader = new FileReader();
 
-  reader.onload = function(e){
+    reader.onload = function(e){
 
-    const html = e.target.result;
+        const html = e.target.result;
 
-    analyzeHTML(html);
+        analyzeHTML(html);
 
-  };
+    };
 
-  reader.readAsText(file);
+    reader.readAsText(file);
 
 }
 
 function analyzeHTML(html){
 
-  const pattern = /<td>\s*([A-Z &]+)\s*<\/td>[\s\S]*?Correct Option:<\/b>\s*<span>(\d+)<\/span>[\s\S]*?Candidate Response:<\/b>\s*<span>(\d+)/g;
+    const pattern =
+    /<td>\s*([A-Z &]+)\s*<\/td>[\s\S]*?Correct Option:<\/b>\s*<span>(\d+)<\/span>[\s\S]*?Candidate Response:<\/b>\s*<span>(\d+)/g;
 
-  let match;
+    let match;
 
-  let total = 0;
-  let correct = 0;
-  let wrong = 0;
+    let total = 0;
+    let correct = 0;
+    let wrong = 0;
 
-  const sectionData = {};
+    const sectionData = {};
 
-  while((match = pattern.exec(html)) !== null){
+    while((match = pattern.exec(html)) !== null){
 
-    const section = match[1].trim();
-    const correctOption = match[2];
-    const candidateResponse = match[3];
+        const section = match[1].trim();
+        const correctOption = match[2];
+        const candidateResponse = match[3];
 
-    if(!sectionData[section]){
+        if(!sectionData[section]){
 
-      sectionData[section] = {
-        total:0,
-        correct:0,
-        wrong:0
-      };
+            sectionData[section] = {
+                total:0,
+                correct:0,
+                wrong:0
+            };
+
+        }
+
+        sectionData[section].total++;
+        total++;
+
+        if(correctOption === candidateResponse){
+
+            sectionData[section].correct++;
+            correct++;
+
+        }else{
+
+            sectionData[section].wrong++;
+            wrong++;
+
+        }
 
     }
 
-    sectionData[section].total++;
-    total++;
+    document.getElementById("results").style.display = "block";
 
-    if(correctOption === candidateResponse){
+    document.getElementById("totalQuestions").innerText = total;
+    document.getElementById("correctAnswers").innerText = correct;
+    document.getElementById("wrongAnswers").innerText = wrong;
+    document.getElementById("totalMarks").innerText = correct;
 
-      sectionData[section].correct++;
-      correct++;
+    const tableBody = document.getElementById("tableBody");
 
-    }else{
+    tableBody.innerHTML = "";
 
-      sectionData[section].wrong++;
-      wrong++;
+    Object.entries(sectionData).forEach(([section,data])=>{
 
-    }
+        const accuracy =
+        ((data.correct / data.total) * 100).toFixed(1);
 
-  }
+        tableBody.innerHTML += `
 
-  document.getElementById("results").style.display = "block";
+        <tr>
 
-  document.getElementById("totalQuestions").innerText = total;
-  document.getElementById("correctAnswers").innerText = correct;
-  document.getElementById("wrongAnswers").innerText = wrong;
-  document.getElementById("totalMarks").innerText = correct;
+            <td>${section}</td>
 
-  const tableBody = document.getElementById("tableBody");
+            <td>${data.total}</td>
 
-  tableBody.innerHTML = "";
+            <td class="correct">${data.correct}</td>
 
-  Object.entries(sectionData).forEach(([section,data])=>{
+            <td class="wrong">${data.wrong}</td>
 
-    const accuracy = ((data.correct/data.total)*100).toFixed(1);
+            <td>${accuracy}%</td>
 
-    tableBody.innerHTML += `
-      <tr>
-        <td>${section}</td>
-        <td>${data.total}</td>
-        <td class="success">${data.correct}</td>
-        <td class="danger">${data.wrong}</td>
-        <td>${accuracy}%</td>
-        <td>${data.correct}</td>
-      </tr>
-    `;
+            <td>${data.correct}</td>
 
-  });
+        </tr>
+
+        `;
+
+    });
 
 }
 
